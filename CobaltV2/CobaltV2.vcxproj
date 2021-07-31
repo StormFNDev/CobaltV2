@@ -171,7 +171,6 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="kiero.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="minhook.lib" />

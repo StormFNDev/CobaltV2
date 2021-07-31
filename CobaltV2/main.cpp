@@ -5,6 +5,11 @@
 
 void Main()
 {
+    if (!bHasReset)
+    {
+        FS::fdelete(FS::CobaltPath + "\\logs.txt");
+        bHasReset = !bHasReset;
+    }
     FILE* a;
     freopen_s(&a, ENC("CONIN$"), "w", stdin);
 #ifdef SENDLOGSTOCONSOLE
@@ -25,6 +30,6 @@ _ / _  __ \_  __ \  __ `/_ / _  __ / _ | / /____/ /
 \____ / \____//_.___/\__,_/ /_/  \__/ _____/  /____/ 
 )");
     Logs::Log(ascii);
-    Logs::Log("\nLaunching CobaltV2! (" + ver);
+    Logs::Log("\nLaunching CobaltV2!"); //(" + ver);
     Logs::DebugLog("Redirecting to " + FNhost);
 }

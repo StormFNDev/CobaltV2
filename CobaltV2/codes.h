@@ -13,6 +13,7 @@ Kiero Errors
 
 enum class ErrCodes
 {
+	FSTREAM_NOT_OPEN = 200,
 	KIERO_NOT_INITIALIZED = 300,
 	KIERO_UNKNOWN_ERROR = 399
 };
