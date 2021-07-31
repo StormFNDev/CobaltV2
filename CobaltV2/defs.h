@@ -7,7 +7,6 @@ https://github.com/Xenia0/Curl-Server-Manipulation/blob/main/CSM/CurlDefinitions
 
 #pragma once
 
-//got these definitions from reversing curl
 #define CURLOPT_URL 0x2712
 #define CURLOPT_NOPROXY 0x27C1
 #define CURLOPT_SSL_VERIFYPEER 0x40
