@@ -123,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;COBALTV2_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -153,13 +153,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="codes.h" />
     <ClInclude Include="curl.h" />
     <ClInclude Include="defs.h" />
     <ClInclude Include="enums.h" />
     <ClInclude Include="kiero.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="hook.h" />
-    <ClInclude Include="logger.h" />
+    <ClInclude Include="util.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="MinHook.h" />
     <ClInclude Include="settings.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="kiero.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="minhook.lib" />

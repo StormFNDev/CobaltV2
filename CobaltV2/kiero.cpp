@@ -31,7 +31,7 @@
 #endif
 
 #if KIERO_USE_MINHOOK
-# include "minhook/include/MinHook.h"
+#include "MinHook.h"
 #endif
 
 #ifdef _UNICODE
@@ -675,17 +675,18 @@ void kiero::shutdown()
 	}
 }
 
-kiero::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function)
+//kiero::Status::Enum kiero::bind(uint16_t _index, void** _original, void* _function)
+kiero::Status::Enum kiero::bind(void* _index, void** _original, void* _function)
 {
 	// TODO: Need own detour function
 
-	assert(_index >= 0 && _original != NULL && _function != NULL);
+	//assert(_index >= 0 && _original != NULL && _function != NULL);
 
 	if (g_renderType != RenderType::None)
 	{
 #if KIERO_USE_MINHOOK
-		void* target = (void*)g_methodsTable[_index];
-		if (MH_CreateHook(target, _function, _original) != MH_OK || MH_EnableHook(target) != MH_OK)
+		//void* target = (void*)g_methodsTable[_index];
+		if (MH_CreateHook(_index, _function, _original) != MH_OK || MH_EnableHook(_index) != MH_OK)
 		{
 			return Status::UnknownError;
 		}

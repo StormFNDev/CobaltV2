@@ -3,6 +3,7 @@
 #include "xorstr.hpp"
 #include <string>
 
+constexpr float ver = 0.5;
 constexpr bool bIsProd = true;
 constexpr bool bIsS13 = false;
 constexpr bool bWriteLogsToFile = false;

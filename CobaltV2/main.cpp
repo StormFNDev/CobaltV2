@@ -1,7 +1,7 @@
 #pragma once
 #include "settings.h"
-#include "logger.h"
 #include <Windows.h>
+#include "util.h"
 
 void Main()
 {
@@ -25,6 +25,6 @@ _ / _  __ \_  __ \  __ `/_ / _  __ / _ | / /____/ /
 \____ / \____//_.___/\__,_/ /_/  \__/ _____/  /____/ 
 )");
     Logs::Log(ascii);
-    Logs::Log("\nLaunching CobaltV2!");
+    Logs::Log("\nLaunching CobaltV2! (" + ver);
     Logs::DebugLog("Redirecting to " + FNhost);
 }

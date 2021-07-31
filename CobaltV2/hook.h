@@ -7,17 +7,12 @@
 #include "enums.h"
 #include "kiero.h"
 
-namespace InitTypes {
-	bool InitVEH = false;
-	bool InitMH = false;
-}
-
 struct HookInfo
 {
 	void* Dest;
 	void* detour;
 
-	HookInfo(void* Dest, void* destour) : Dest(Dest), detour(detour) {}
+	HookInfo(void* Dest, void* detour) : Dest(Dest), detour(detour) {}
 };
 
 static std::vector<HookInfo> Hooks;
@@ -37,7 +32,7 @@ LONG WINAPI VectoredExceptionHandler(EXCEPTION_POINTERS* Exception)
 
 	if (Exception->ExceptionRecord->ExceptionCode == STATUS_GUARD_PAGE_VIOLATION)
 	{
-		for (HookInfo& Hook : Hooks)if (Hook.Target == (void*)Exception->ContextRecord->Rip) Exception->ContextRecord->Rip = (uintptr_t)Hook.Detour;
+		for (HookInfo& Hook : Hooks)if (Hook.Dest == (void*)Exception->ContextRecord->Rip) Exception->ContextRecord->Rip = (uintptr_t)Hook.detour;
 		Exception->ContextRecord->EFlags |= 0x100;
 		return EXCEPTION_CONTINUE_EXECUTION;
 	}
@@ -46,7 +41,7 @@ LONG WINAPI VectoredExceptionHandler(EXCEPTION_POINTERS* Exception)
 		for (HookInfo& Hook : Hooks)
 		{
 			DWORD dwOldProtect;
-			VirtualProtect(Hook.Target, 1, PAGE_EXECUTE_READ | PAGE_GUARD, &dwOldProtect);
+			VirtualProtect(Hook.Dest, 1, PAGE_EXECUTE_READ | PAGE_GUARD, &dwOldProtect);
 		}
 
 		return EXCEPTION_CONTINUE_EXECUTION;
@@ -65,13 +60,25 @@ class Hooking
 			AddVectoredExceptionHandler(true, (PVECTORED_EXCEPTION_HANDLER)VectoredExceptionHandler);
 			InitTypes::InitVEH = true;
 			return InitTypes::InitVEH;
+			break;
 		case HookingMethod::MH:
 			if (InitTypes::InitMH) return true;
 			MH_Initialize();
 			InitTypes::InitMH = true;
 			return InitTypes::InitMH;
+			break;
 		case HookingMethod::KIERO:
-				kiero::init(kiero::RenderType::Auto);
+			bool init_hook = false;
+			do
+			{
+				if (kiero::init(kiero::RenderType::Auto) == kiero::Status::Success)
+				{
+					init_hook = true;
+				}
+			} while (!init_hook);
+			InitTypes::InitKiero = true;
+			return InitTypes::InitKiero;
+			break;
 		default:
 			return false;
 		}
@@ -91,6 +98,13 @@ class Hooking
 			MH_CreateHook(Dest, detour, (void**)og);
 			if (!MH_EnableHook(Dest) != MH_OK) return false;
 			return true;
+		case HookingMethod::KIERO:
+			kiero::Status::Enum a = kiero::bind(Dest, (void**)og, detour);
+			if (a != kiero::Status::Success)
+			{
+				if(a == kiero::Status::NotInitializedError)
+				return false;
+			}
 		default:
 			return false;
 		}

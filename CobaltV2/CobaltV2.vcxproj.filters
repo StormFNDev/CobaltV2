@@ -25,12 +25,15 @@
     <Filter Include="Third Party\MinHook">
       <UniqueIdentifier>{bd70b5e5-683c-4237-88ac-35eaef01d433}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{ef0d9656-b193-4602-961c-181c860f9124}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="xorstr.hpp">
       <Filter>Third Party</Filter>
     </ClInclude>
-    <ClInclude Include="logger.h">
+    <ClInclude Include="util.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="settings.h">
@@ -63,6 +66,9 @@
     <ClInclude Include="enums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="codes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -73,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="kiero.cpp">
       <Filter>Third Party\Kiero</Filter>
+    </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
