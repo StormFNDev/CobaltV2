@@ -51,9 +51,6 @@
     <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="structs.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="MinHook.h">
       <Filter>Third Party\MinHook</Filter>
     </ClInclude>

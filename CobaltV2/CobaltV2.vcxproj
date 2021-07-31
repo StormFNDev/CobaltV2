@@ -164,7 +164,6 @@
     <ClInclude Include="memory.h" />
     <ClInclude Include="MinHook.h" />
     <ClInclude Include="settings.h" />
-    <ClInclude Include="structs.h" />
     <ClInclude Include="xorstr.hpp" />
   </ItemGroup>
   <ItemGroup>

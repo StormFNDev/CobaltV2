@@ -1,5 +1,7 @@
 #pragma once
 
+#include "enums.h"
+
 #include "xorstr.hpp"
 #include <string>
 
@@ -12,8 +14,10 @@ bool bHasReset = false; // temporary fix.
 #define SENDLOGSTOCONSOLE
 std::string FNhost = ENC("storm-fn.dev");
 std::string ProxyHost = ENC("");
-
 constexpr bool INGAME = true;
+
+DLLType DLLVer = DLLType::S13;
+
 constexpr bool PROCESSEVENTHOOK = true;
 
 #ifdef READFILE // man that 1kb is important ok :/

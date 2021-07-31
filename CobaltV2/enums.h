@@ -11,3 +11,8 @@ namespace InitTypes {
 	bool InitMH = false;
 	bool InitKiero = false;
 }
+
+enum class DLLType {
+	S13,
+	PROD
+};
