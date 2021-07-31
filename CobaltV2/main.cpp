@@ -13,7 +13,7 @@ void Main()
     FILE* a;
     freopen_s(&a, ENC("CONIN$"), "w", stdin);
 #ifdef SENDLOGSTOCONSOLE
-    AllocConsole(); // BUG: Console does not get written to without logs enabled.
+    AllocConsole();
     freopen_s(&a, ENC("CONOUT$"), "w", stdout);
     freopen_s(&a, ENC("CONOUT$"), "w", stderr);
 #endif

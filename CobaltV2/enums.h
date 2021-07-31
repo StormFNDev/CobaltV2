@@ -1,8 +1,8 @@
 #pragma once
 
 enum class HookingMethod {
-	VEH = 0,
-	MH = 1,
+	VEH = 0, // VectoredExceptionHandler
+	MH = 1, // MinHook
 	KIERO = 2 // DX9, DX10, Vulkan, DX11, DX12, OpenGl, etc.
 };
 
