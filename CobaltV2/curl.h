@@ -25,8 +25,7 @@ public:
         switch (opt)
         {
         case CURLOPT_NOPROXY:
-            const char* ProxyHostC = ProxyHost.c_str();
-            return _curl_easy_setopt(Curl, opt, ProxyHostC);
+            return _curl_easy_setopt(Curl, opt, ProxyHost);
             break;
 
         case CURLOPT_SSL_VERIFYPEER:
@@ -48,13 +47,3 @@ public:
         CurlSetOptP = Memory::sigscan(ENC("48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 48 83 EC 30 33 ED 49 8B F0 48 8B D9"));
     }
 };
-
-/*
-
-If for some reason your messing with this, here are some bugs I fixed:
-
-1. Game would crash after like 5 seconds. This means you forgot to continue normal execution
-2. Wouldn't redirect, but it was comign up in logs. No idea how to fix, just mess around with it.
-Fix for 2: Make host not encrypted
-
-*/
