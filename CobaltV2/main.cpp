@@ -1,21 +1,19 @@
-#pragma once
-#include "settings.h"
-#include <Windows.h>
-#include "util.h"
 #include "curl.h"
 #include "hook.h"
+
+bool bHasReset = false; // temporary fix.
 
 void Main()
 {
     if (!bHasReset)
     {
-        FS::fdelete(FS::CobaltPath + "\\logs.txt");
+        fdelete(GetCobaltPath() + "\\logs.txt");
         bHasReset = !bHasReset;
-        FS::fcreate(FS::CobaltPath + "\\logs.txt");
+        fcreate(GetCobaltPath() + "\\logs.txt");
     }
     std::string b = ", ";
-    FS::WriteToLog(ConstToStr("Settings: ") + FloatToStr(ver) + b + BoolToStr(bIsProd) + b + BoolToStr(bIsS13) + b + BoolToStr(bWriteLogsToFile) + b + BoolToStr(bHasReset) + b + BoolToStr(INGAME) + b + BoolToStr(PROCESSEVENTHOOK) + b + BoolToStr(bIsHybrid));
-    FS::WriteToLog("Redirecting streams..");
+    WriteToLog(ConstToStr("Settings: ") + FloatToStr(ver) + b + BoolToStr(bIsProd) + b + BoolToStr(bIsS13) + b + BoolToStr(bWriteLogsToFile) + b + BoolToStr(bHasReset) + b + BoolToStr(INGAME) + b + BoolToStr(PROCESSEVENTHOOK) + b + BoolToStr(bIsHybrid));
+    WriteToLog("Redirecting streams..");
     FILE* a;
     freopen_s(&a, ENC("CONIN$"), "w", stdin);
 #ifdef SENDLOGSTOCONSOLE
@@ -28,6 +26,7 @@ void Main()
     freopen_s(&a, ENC("logs.txt"), "w", stdout); // Writes processevent (logs) to file.
 #endif
 #endif
+    Curl::Curl();
     Hooking::Hook((void*)CurlEasyOptP, Curl::CurlHook, (void**)&_curl_easy_setopt, HookMethod);
     const char* ascii = ENC(R"(
 _________     ______        _____________    _______
@@ -36,7 +35,7 @@ _ / _  __ \_  __ \  __ `/_ / _  __ / _ | / /____/ /
 / /___  / /_/ /  /_/ / /_/ /_  / / /_ __ |/ / _  __ /
 \____ / \____//_.___/\__,_/ /_/  \__/ _____/  /____/ 
 )");
-    Logs::Log(ascii);
-    Logs::Log("\nLaunching CobaltV2!"); //(" + ver);
-    Logs::DebugLog("Redirecting to " + FNhost);
+    Log(ascii);
+    Log("\nLaunching CobaltV2!"); //(" + ver);
+    Log(ConstToStr("Redirecting to ") + FNhost, true, true);
 }

@@ -44,27 +44,27 @@ public:
             {
                 if (std::regex_search(info, std::regex(ENC("/fortnite/api/cloudstorage/system")))) {
                     url = std::regex_replace(info, Host, FNhost);
-                    Logs::Log(ENC("Redirected Cloudstorage / System"));
+                    Log(ENC("Redirected Cloudstorage / System"));
                 }
                 else if (std::regex_search(info, std::regex(ENC("/fortnite/api/v2/versioncheck/")))) {
                     url = std::regex_replace(info, Host, FNhost);
-                    Logs::Log(ENC("Redirected Versioncheck"));
+                    Log(ENC("Redirected Versioncheck"));
                 }
                 else if (std::regex_search(info, std::regex(ENC("/fortnite/api/game/v2/profile")))) {
                     url = std::regex_replace(info, Host, FNhost);
-                    Logs::Log(ENC("Redirected Profile"));
+                    Log(ENC("Redirected Profile"));
                 }
                 else if (std::regex_search(info, std::regex(ENC("/content/api/pages/fortnite-game")))) {
                     url = std::regex_replace(info, Host, FNhost);
-                    Logs::Log(ENC("Redirected fortnite-game"));
+                    Log(ENC("Redirected fortnite-game"));
                 }
                 else if (std::regex_search(info, std::regex(ENC("/affiliate/api/public/affiliates/slug")))) {
                     url = std::regex_replace(info, Host, FNhost);
-                    Logs::Log(ENC("Redirected Affiliates"));
+                    Log(ENC("Redirected Affiliates"));
                 }
                 else if (std::regex_search(info, std::regex(ENC("/socialban/api/public/v1")))) {
                     url = std::regex_replace(info, Host, FNhost);
-                    Logs::Log(ENC("Redirected Socialban"));
+                    Log(ENC("Redirected Socialban"));
                 }
                 return _curl_easy_setopt(Curl, opt, url.c_str());
                 break;

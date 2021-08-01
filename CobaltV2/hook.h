@@ -1,10 +1,12 @@
 #pragma once
+
 #include <Windows.h>
-#include <string>
 #include <vector>
 #include "MinHook.h"
 #include "enums.h"
 #include "kiero.h"
+#include "codes.h"
+#include "util.h"
 
 struct HookInfo
 {
@@ -79,14 +81,13 @@ private:
 			InitTypes::InitKiero = true;
 			return InitTypes::InitKiero;
 			break;
-		default:
-			return false;
 		}
+		return false;
 	}
 public:
 	static bool Hook(void* Dest, void* detour, void* og, HookingMethod type)
 	{
-		if (!Init(type)) return false;
+		if (!Init(type)) Init(type);
 
 		switch (type) {
 		case HookingMethod::VEH:
@@ -103,12 +104,14 @@ public:
 			kiero::Status::Enum a = kiero::bind(Dest, (void**)og, detour);
 			if (a != kiero::Status::Success)
 			{
-				if(a == kiero::Status::NotInitializedError)
+				if (a == kiero::Status::NotInitializedError)
+				{
+					Log(KIERO_NOT_INITIALIZED, Colors::defaultGray, true, true);
+				}
 				return false;
 			}
-		default:
-			return false;
 		}
+		return false;
 	}
 	bool Unhook(void* Dest) // TODO
 	{

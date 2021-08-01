@@ -45,3 +45,12 @@ CobaltV2 Features:
 - S13 And Prod Modes
 
 */
+
+/*
+
+TODO: 
+Acutally use xor
+~~Add Debug as a option in the Log function~~ DONE
+Add back namespaces (Cobalt V2.5 or V3.0)
+
+*/

@@ -74,6 +74,9 @@
     <ClCompile Include="kiero.cpp">
       <Filter>Third Party\Kiero</Filter>
     </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="minhook.lib">

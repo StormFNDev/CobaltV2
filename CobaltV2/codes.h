@@ -11,7 +11,7 @@ Kiero Errors
 300-399
 */
 
-namespace ErrCodes
+namespace
 {
 	int BOOL_TO_STR_FAILED = 100;
 	int FSTREAM_NOT_OPEN = 200;

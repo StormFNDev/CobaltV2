@@ -9,7 +9,6 @@ constexpr float ver = 0.5;
 constexpr bool bIsProd = true;
 constexpr bool bIsS13 = false;
 constexpr bool bWriteLogsToFile = false;
-bool bHasReset = false; // temporary fix.
 //#define READFILE // can't if statement bcuz ye
 #define SENDLOGSTOCONSOLE
 std::string FNhost = ENC("storm-fn.dev");
