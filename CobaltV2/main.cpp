@@ -9,7 +9,11 @@ void Main()
     {
         FS::fdelete(FS::CobaltPath + "\\logs.txt");
         bHasReset = !bHasReset;
+        FS::fcreate(FS::CobaltPath + "\\logs.txt");
     }
+    std::string b = ", ";
+    FS::WriteToLog(ConstToStr("Settings: ") + FloatToStr(ver) + b + BoolToStr(bIsProd) + b + BoolToStr(bIsS13) + b + BoolToStr(bWriteLogsToFile) + b + BoolToStr(bHasReset) + b + BoolToStr(INGAME) + b + BoolToStr(PROCESSEVENTHOOK) + b + BoolToStr(bIsHybrid));
+    FS::WriteToLog("Redirecting streams..");
     FILE* a;
     freopen_s(&a, ENC("CONIN$"), "w", stdin);
 #ifdef SENDLOGSTOCONSOLE

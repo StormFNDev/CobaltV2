@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include "MinHook.h"
-#include "structs.h"
 #include "enums.h"
 #include "kiero.h"
 
@@ -114,7 +113,7 @@ class Hooking
 		return NULL;
 	}
 	
-	static void* ProcessEventHook(UObject* Object, UObject* Function, void* Params)
+	/* static void* ProcessEventHook(UObject* Object, UObject* Function, void* Params)
 	{
 		if (Object && Function)
 		{
@@ -132,5 +131,5 @@ class Hooking
 		}
 
 		return ProcessEvent(Object, Function, Params);
-	}
+	} */
 }; 

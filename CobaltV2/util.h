@@ -7,22 +7,6 @@
 #include "codes.h"
 #include "settings.h"
 
-namespace fs = std::filesystem;
-
-namespace Conversions
-{
-    static const char* CharPtrToConst(char* msg) { return msg; }
-    static std::string FloatToStr(float f) { return std::to_string(f); }
-    static std::string IntToStr(int i) { return std::to_string(i); }
-    static const char* StrToConst(std::string msg) { return msg.c_str(); }
-    static std::string ConstToStr(const char* msg) { return msg; };
-    static std::string PathToStr(fs::path msg)
-    {
-        std::string path_string = msg.u8string();
-        return path_string;
-    }
-}
-
 namespace Colors
 {
     int cyan = 3;
@@ -31,8 +15,37 @@ namespace Colors
     int defaultGray = 7;
 }
 
+namespace FS
+{
+    template <typename T>
+    static void WriteToLog(T msg);
+}
+
+namespace fs = std::filesystem;
+
+static const char* CharPtrToConst(char* c) { return c; }
+static std::string FloatToStr(float f) { return std::to_string(f); }
+static std::string IntToStr(int i) { return std::to_string(i); }
+//static const char* StrToConst(std::string s) { return s.c_str(); }
+static std::string ConstToStr(const char* c) { return c; };
+static std::string PathToStr(fs::path p)
+{
+    std::string pstr = p.u8string();
+    return pstr;
+}
+static std::string BoolToStr(bool b)
+{
+    if (b) return "true";
+    else if (!b) return "false";
+    return IntToStr(ErrCodes::BOOL_TO_STR_FAILED);
+}
+
+
 namespace Logs
 {
+
+    static void nl() { std::cout << std::endl; }
+
     //template <typename T>
     static bool RainbowLog(std::string msg) // TODO: Add support for const char etc.
     {
@@ -51,26 +64,37 @@ namespace Logs
             if (msgIndex == msg.length() + 1)
             {
                 nl();
-                return;
+                return true;
             }
-            Log(msg[msgIndex], k, false);
+            HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+            SetConsoleTextAttribute(hConsole, k);
+            std::cout << msg[msgIndex];
             msgIndex++;
             if (k == 15) k = 1;
         }
         return true;
     }
-    static void nl() { std::cout << std::endl; }
 
-    template <typename T>
-    static void Log(T msg, int color = Colors::defaultGray, bool bNl = true, bool rainbowLog = false)
+    static void Log(std::string msg, int color = Colors::defaultGray, bool bNl = true, bool rainbowLog = false)
     {
         if (rainbowLog)
         {
             std::string msgStr = msg;
             bool t = RainbowLog(msgStr);
-            if (t) (bNl)nl();
+            if (t)
+            {
+                if (bNl) nl();
+            }
             return;
         }
+        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(hConsole, color);
+        std::cout << msg;
+        if (bNl) nl();
+    }
+
+    static void Log(int msg, int color = Colors::defaultGray, bool bNl = true)
+    {
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         SetConsoleTextAttribute(hConsole, color);
         std::cout << msg;
@@ -80,10 +104,13 @@ namespace Logs
     template <typename T>
     static void DebugLog(T msg, int color = Colors::defaultGray, bool bNl = true, bool rainbowLog = false)
     {
-        if (!PROD) Log(msg, color, bNl, rainbowLog);
+        if (!bIsProd) Log(msg, color, bNl, rainbowLog);
     }
 
-    static void LogErr(int code) { Log(Conversions::ConstToStr("Error Code: #") + Conversions::IntToStr(code), Colors::lightRed); }
+    static void LogErr(int code) 
+    { 
+        Log(ConstToStr("Error Code: #") + IntToStr(code), Colors::lightRed, false); 
+    }
 }
 
 namespace FS
@@ -96,16 +123,16 @@ namespace FS
 
     static bool fdelete(const fs::path& p)
     {
-        if (!fexists(p)) return;
+        if (!fexists(p)) return false;
         fs::remove(p);
-        WriteToLog(Conversions::ConstToStr("Deleted ") + Conversions::PathToStr(p));
+        WriteToLog(ConstToStr("Deleted ") + PathToStr(p));
     }
 
     static void fcreate(const fs::path& p)
     {
         if (fexists(p)) return;
         fs::create_directory(p);
-        WriteToLog(Conversions::ConstToStr("Created ") + Conversions::PathToStr(p));
+        WriteToLog(ConstToStr("Created ") + PathToStr(p));
     }
 
     static const char* GetEnv(const char* envname)
@@ -114,10 +141,10 @@ namespace FS
         char* pValue;
         size_t len;
         errno_t err = _dupenv_s(&pValue, &len, envname);
-        return Conversions::CharPtrToConst(pValue);
+        return CharPtrToConst(pValue);
     }
 
-    std::string CobaltPath = GetEnv("APPDATA") + Conversions::ConstToStr("\\United Backend\\CobaltV2");
+    std::string CobaltPath = GetEnv("APPDATA") + ConstToStr("\\United Backend\\CobaltV2");
 
     static void InitAD()
     {
@@ -132,7 +159,7 @@ namespace FS
     {
         std::ofstream outfile;
         outfile.open(CobaltPath + "\\logs.txt", std::ios::app); // TODO(Milxnor): name the files the time and date so the logs dont reset every time idk.
-        if (!outfile.is_open()) Logs::LogErr(FSTREAM_NOT_OPENED);
+        if (!outfile.is_open()) Logs::LogErr(ErrCodes::FSTREAM_NOT_OPEN);
         outfile << msg << std::endl;
         outfile.close();
     }
