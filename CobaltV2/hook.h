@@ -51,7 +51,8 @@ LONG WINAPI VectoredExceptionHandler(EXCEPTION_POINTERS* Exception)
 
 class Hooking
 {
-	bool Init(HookingMethod type) // Sets up veh and mh
+private:
+	static bool Init(HookingMethod type) // Sets up veh and mh
 	{
 		switch (type)
 		{
@@ -82,7 +83,8 @@ class Hooking
 			return false;
 		}
 	}
-	bool Hook(void* Dest, void* detour, HookingMethod type, void* og)
+public:
+	static bool Hook(void* Dest, void* detour, void* og, HookingMethod type)
 	{
 		if (!Init(type)) return false;
 

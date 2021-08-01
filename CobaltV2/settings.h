@@ -16,6 +16,7 @@ std::string FNhost = ENC("storm-fn.dev");
 std::string ProxyHost = ENC("");
 constexpr bool INGAME = true;
 
+HookingMethod HookMethod = HookingMethod::KIERO;
 DLLType DLLVer = DLLType::S13;
 
 constexpr bool PROCESSEVENTHOOK = true;

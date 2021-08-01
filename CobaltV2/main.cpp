@@ -2,6 +2,8 @@
 #include "settings.h"
 #include <Windows.h>
 #include "util.h"
+#include "curl.h"
+#include "hook.h"
 
 void Main()
 {
@@ -26,6 +28,7 @@ void Main()
     freopen_s(&a, ENC("logs.txt"), "w", stdout); // Writes processevent (logs) to file.
 #endif
 #endif
+    Hooking::Hook((void*)CurlEasyOptP, Curl::CurlHook, (void**)&_curl_easy_setopt, HookMethod);
     const char* ascii = ENC(R"(
 _________     ______        _____________    _______
 __  ____ / ________ / _______ ___ / _ / __ |  / /_ | __ \
