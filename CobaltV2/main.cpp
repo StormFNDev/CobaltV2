@@ -14,10 +14,10 @@ void Main()
     std::string b = ", ";
     WriteToLog(ConstToStr("Settings: ") + FloatToStr(ver) + b + BoolToStr(bIsProd) + b + BoolToStr(bIsS13) + b + BoolToStr(bWriteLogsToFile) + b + BoolToStr(bHasReset) + b + BoolToStr(INGAME) + b + BoolToStr(PROCESSEVENTHOOK) + b + BoolToStr(bIsHybrid));
     WriteToLog("Redirecting streams..");
+    AllocConsole();
     FILE* a;
     freopen_s(&a, ENC("CONIN$"), "w", stdin);
 #ifdef SENDLOGSTOCONSOLE
-    AllocConsole();
     freopen_s(&a, ENC("CONOUT$"), "w", stdout);
     freopen_s(&a, ENC("CONOUT$"), "w", stderr);
 #endif

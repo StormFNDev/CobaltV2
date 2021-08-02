@@ -1,18 +1,18 @@
 #pragma once
 
-enum class HookingMethod {
-	VEH = 0, // VectoredExceptionHandler
-	MH = 1, // MinHook
-	KIERO = 2 // DX9, DX10, Vulkan, DX11, DX12, OpenGl, etc.
-};
+namespace {
+	int VEH = 0; // VectoredExceptionHandler
+	int MH = 1; // MinHook
+	int KIERO = 2; // DX9, DX10, Vulkan, DX11, DX12, OpenGl, etc.
+}
 
-namespace InitTypes {
+namespace {
 	bool InitVEH = false;
 	bool InitMH = false;
 	bool InitKiero = false;
 }
 
-enum class DLLType {
-	S13,
-	PROD
-};
+namespace {
+	int S13 = 0;
+	int PROD = 1;
+}

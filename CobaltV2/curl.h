@@ -96,11 +96,11 @@ public:
     {
         CurlEasyOptP = Memory::sigscan(ENC("89 54 24 10 4C 89 44 24 18 4C 89 4C 24 20 48 83 EC 28 48 85 C9"));
         CurlSetOptP = Memory::sigscan(ENC("48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 48 83 EC 30 33 ED 49 8B F0 48 8B D9"));
-        if (INGAME)
+        /* if (INGAME)
         {
             LPVOID lpCurlSetopt;
             INT(*CurlSetoptCast)(LPVOID, INT, va_list) = NULL;
             CurlSetoptCast = reinterpret_cast<decltype(CurlSetoptCast)>(CurlSetOptP);
-        }
+        } */
     }
 };

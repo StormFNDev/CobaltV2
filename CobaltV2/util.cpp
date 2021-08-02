@@ -11,7 +11,7 @@ namespace Colors
 {
     int cyan = 3;
     int lightRed = 12;
-    int green = 10;
+    //int green = 10;
     int defaultGray = 7;
 }
 

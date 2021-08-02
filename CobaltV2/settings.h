@@ -11,12 +11,16 @@ constexpr bool bIsS13 = false;
 constexpr bool bWriteLogsToFile = false;
 //#define READFILE // can't if statement bcuz ye
 #define SENDLOGSTOCONSOLE
-std::string FNhost = ENC("storm-fn.dev");
-std::string ProxyHost = ENC("");
+namespace {
+	std::string FNhost = "storm-dev1.herokuapp.com";
+	std::string ProxyHost = "";
+}
 constexpr bool INGAME = true;
 
-HookingMethod HookMethod = HookingMethod::KIERO;
-DLLType DLLVer = DLLType::S13;
+namespace {
+	int HookMethod = KIERO;
+	int version = S13;
+}
 
 constexpr bool PROCESSEVENTHOOK = true;
 

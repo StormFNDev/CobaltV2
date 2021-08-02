@@ -54,22 +54,22 @@ LONG WINAPI VectoredExceptionHandler(EXCEPTION_POINTERS* Exception)
 class Hooking
 {
 private:
-	static bool Init(HookingMethod type) // Sets up veh and mh
+	static bool Init(int type) // Sets up veh and mh
 	{
 		switch (type)
 		{
-		case HookingMethod::VEH:
+		case 0:
 			AddVectoredExceptionHandler(true, (PVECTORED_EXCEPTION_HANDLER)VectoredExceptionHandler);
-			InitTypes::InitVEH = true;
-			return InitTypes::InitVEH;
+			InitVEH = true;
+			return InitVEH;
 			break;
-		case HookingMethod::MH:
-			if (InitTypes::InitMH) return true;
+		case 1:
+			if (InitMH) return true;
 			MH_Initialize();
-			InitTypes::InitMH = true;
-			return InitTypes::InitMH;
+			InitMH = true;
+			return InitMH;
 			break;
-		case HookingMethod::KIERO:
+		case 2:
 			bool init_hook = false;
 			do
 			{
@@ -78,29 +78,29 @@ private:
 					init_hook = true;
 				}
 			} while (!init_hook);
-			InitTypes::InitKiero = true;
-			return InitTypes::InitKiero;
+			InitKiero = true;
+			return InitKiero;
 			break;
 		}
 		return false;
 	}
 public:
-	static bool Hook(void* Dest, void* detour, void* og, HookingMethod type)
+	static bool Hook(void* Dest, void* detour, void* og, int type)
 	{
 		if (!Init(type)) Init(type);
 
 		switch (type) {
-		case HookingMethod::VEH:
+		case 0:
 			if (AreSamePage(Dest, detour)) return false;
 			DWORD dwOldProtect;
 			VirtualProtect(Dest, 1, PAGE_EXECUTE_READ | PAGE_GUARD, &dwOldProtect);
 			Hooks.emplace_back(Dest, detour);
 			return true;
-		case HookingMethod::MH:
+		case 1:
 			MH_CreateHook(Dest, detour, (void**)og);
 			if (!MH_EnableHook(Dest) != MH_OK) return false;
 			return true;
-		case HookingMethod::KIERO:
+		case 2:
 			kiero::Status::Enum a = kiero::bind(Dest, (void**)og, detour);
 			if (a != kiero::Status::Success)
 			{
