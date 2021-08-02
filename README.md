@@ -1,6 +1,4 @@
-# CobaltV2
-Sum SSL Bypass
-not done rn
+# SSL Bypass by Milxnor, for StormFN and several other servers.
 
 Features:
 VEH, Minhook, Kiero hooks (dx9, 10, 11, 12, vulkan, opengl).
