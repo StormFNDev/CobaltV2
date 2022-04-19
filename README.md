@@ -6,3 +6,5 @@ ProcessEvent hook
 SSL Bypass
 Xor
 Logs (files)
+
+(4/19/22) this was like 60% skidded, no acutally like 80%
